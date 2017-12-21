@@ -2,8 +2,10 @@
     padding: 50px;
 }
 
-.panel-heading {
-    background-color: rgba(10, 99, 10, .5)
+.panel-body {
+    background-color: rgba(141, 106, 8, 0.5);
+    border-style: inset;
+    border-color: rgb(199, 194, 194);
 }
 
 body {
@@ -13,8 +15,10 @@ body {
     background-size: cover;
 }
 
-jumbotron {
-    height: 76px;
-    padding: 10px;
+.jumbotron {
+    background-color:rgb(195, 228, 196);
+    border-style: inset;
+    border-color: rgb(199, 194, 194);
+    text-align: center;
 }
 

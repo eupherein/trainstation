@@ -61,22 +61,39 @@ $(document).ready(function () {
       var trainTime = childSnapshot.val().time;
       var trainFreq = childSnapshot.val().freq;
 
-      //lot train info
+      //log train info
       console.log(trainName);
       console.log(trainDestination);
       console.log(trainTime);
       console.log(trainFreq);
 
       //beautify stuff
-      var trainStartBeaut = moment.unix(trainTime).format("MM/DD/YY");
+      var trainTimeConv = moment(trainTime, "hh:mm").subtract(1, "years");
+      console.log(trainTimeConv);
 
-      var trainCalc = moment().diff(moment.unix(trainTime, "X"), "time");
-      console.log(trainCalc);
+      //current time
+      var currentTime = moment();
+      console.log("Current time: " + moment(currentTime).format("hh:mm"));
 
-      //do math 
-      var trainDiff;
+      var diffTime = moment().diff(moment(trainTimeConv), "minutes");
+      console.log("Difference in time: " + diffTime);
+
+      //remainder
+      var tRemainder = diffTime % trainTime;
+      console.log(tRemainder);
+
+      //minutes till next train
+      var tMinutesTillNext = trainTime - tRemainder;
+      console.log("Minutes till nex train: " +tMinutesTillNext);
+
+      //next train
+      var nextTrain = moment().add(tMinutesTillNext, "minutes");
+      console.log("ETA: " + moment(nextTrain).format("hh:mm"));
       
-      $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainStartBeaut + "</td><td>" + trainFreq + "</td></tr>")
+    
+    
+      
+      $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainFreq + "</td><td>" + trainTimeConv + "</td><td>" + tRemainder + "</td></tr>")
 
   });
 

@@ -13,27 +13,33 @@ $(document).ready(function () {
   };
   firebase.initializeApp(config);
 
+  //declares variable for refernace of js to database
   var database = firebase.database();
-
+  
+  //declares varitables for when user inputs new data
   var trainName;
   var trainDestination;
   var trainTime;
   var trainFreq;
   var nextTrainFormatted;
+  
   //beautify stuff
   var trainTimeConv;
+ 
   //current time
   var currentTime = moment();
   console.log("Current time: " + moment(currentTime).format("hh:mm"));
   var diffTime;
+  
   //remainder
   var tRemainder;
   var tMinutesTillNext;
   var nextTrain;
 
-  //add employeed button
+  //add new train button
   $("#add-train-btn").on("click", function (event) {
     event.preventDefault();
+    
     //gets user's submission
     var trainName = $("#name-input").val().trim();
     var trainDestination = $("#destination-input").val().trim();
@@ -58,6 +64,7 @@ $(document).ready(function () {
      nextTrainFormatted = moment(nextTrain).format("HH:MM");
     console.log("next train formatted: ", nextTrainFormatted);
     
+   //gives all user entries an object to refer too 
     var trainObject = {
       trainName: trainName,
       trainDestination: trainDestination,
@@ -87,7 +94,7 @@ $(document).ready(function () {
 
     console.log(childSnapshot.val());
 
-    //store info to a variable
+    //stores all info from database to previously declared variables (20-37)
     var childTrainName = childSnapshot.val().trainName;
     var childTrainDestination = childSnapshot.val().trainDestination;
     var childTrainTime = childSnapshot.val().trainTime;
@@ -95,12 +102,12 @@ $(document).ready(function () {
     var childNextFormatted = childSnapshot.val().nextTrain;
     var childMinutesUntilNextTrain = childSnapshot.val().tMinutesTillNext;
 
-      //log train info
+      //log train info 
       console.log(childTrainName, childTrainDestination, childTrainName, childTrainFreq);
 
 
 
-
+    //append new train info to a new table row 
     $("#train-table > tbody").append("<tr><td>" + childTrainName + "</td><td>" + childTrainDestination + "</td><td>" + childTrainFreq + "</td><td>" + nextTrainFormatted + "</td><td>" + childMinutesUntilNextTrain + "</td></tr>")
 
   });

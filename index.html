@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>    
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
@@ -54,21 +59,21 @@
                         <form>
                             <div class="form-group">
                                 <label for="employee-name-input">Train Name</label>
-                                <input class="form-control" id="employee-name-input" type="text" pla>
+                                <input class="form-control" id="name-input" type="text" pla>
                             </div>
                             <div class="form-group">
                                 <label for="role-input">Destination</label>
-                                <input class="form-control" id="role-input" type="text">
+                                <input class="form-control" id="destination-input" type="text">
                             </div>
                             <div class="form-group">
                                 <label for="start-input">First Train Time (DD/MM/YY - ex: 01/01/89)</label>
-                                <input class="form-control" id="start-input" type="number">
+                                <input class="form-control" id="time-input" type="number">
                             </div>
                             <div class="form-group">
                                 <label for="rate-input">Frequency (min)</label>
-                                <input class="form-control" id="rate-input" type="number">
+                                <input class="form-control" id="freq-input" type="number">
                             </div>
-                            <button class="btn btn-primary" id="add-employee-btn" type="submit">Submit</button>
+                            <button class="btn btn-primary" id="add-train-btn" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -79,9 +84,9 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+  
     <script src="assets/javascript/app.js"></script>
+    
 </body>
 
 </html>

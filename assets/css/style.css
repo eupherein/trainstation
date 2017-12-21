@@ -22,3 +22,7 @@ body {
     text-align: center;
 }
 
+.form-control {
+    background-color: rgb(212, 209, 159);
+    border-style: outset;
+}

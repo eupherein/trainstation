@@ -15,31 +15,63 @@ $(document).ready(function () {
 
   var database = firebase.database();
 
+  var trainName;
+  var trainDestination;
+  var trainTime;
+  var trainFreq;
+  var nextTrainFormatted;
+  //beautify stuff
+  var trainTimeConv;
+  //current time
+  var currentTime = moment();
+  console.log("Current time: " + moment(currentTime).format("hh:mm"));
+  var diffTime;
+  //remainder
+  var tRemainder;
+  var tMinutesTillNext;
+  var nextTrain;
+
   //add employeed button
   $("#add-train-btn").on("click", function (event) {
     event.preventDefault();
-
     //gets user's submission
     var trainName = $("#name-input").val().trim();
     var trainDestination = $("#destination-input").val().trim();
     var trainTime = $("#time-input").val().trim();
     var trainFreq = $("#freq-input").val().trim();
+    var trainTimeConv = moment(trainTime, "hh:mm").subtract(1, "years");
+    console.log(trainTimeConv);
+    //current time
+     currentTime = moment();
+    console.log("Current time: " + moment(currentTime).format("hh:mm"));
+     diffTime = currentTime.diff(moment(trainTimeConv), "minutes");
+    console.log("Difference in time: " + diffTime);
+    //remainder
+    tRemainder = diffTime % trainFreq;
+    console.log(tRemainder);
+    //minutes till next train
+    tMinutesTillNext = trainFreq - tRemainder;
+    console.log("Minutes till nex train: " + tMinutesTillNext);
+    //next train
+     nextTrain = moment().add(tMinutesTillNext, "minutes");
+    console.log("ETA: " + moment(nextTrain).format("hh:mm"));
+     nextTrainFormatted = moment(nextTrain).format("HH:MM");
+    console.log("next train formatted: ", nextTrainFormatted);
+    
+    var trainObject = {
+      trainName: trainName,
+      trainDestination: trainDestination,
+      trainTime: trainTime,
+      trainFreq: trainFreq,
+      nextTrainFormatted: nextTrainFormatted,
+      tMinutesTillNext: tMinutesTillNext
 
-    var newTrain = {
-      name: trainName,
-      destination: trainDestination,
-      time: trainTime,
-      freq: trainFreq
-    };
+    }
+
 
     // Uploads train stuff to the database
-    database.ref().push(newTrain);
+    database.ref().push(trainObject);
 
-    // Logs everything to console
-    console.log(newTrain.name);
-    console.log(newTrain.destination);
-    console.log(newTrain.time);
-    console.log(newTrain.freq);
 
     alert("Trains!");
 
@@ -55,48 +87,24 @@ $(document).ready(function () {
 
     console.log(childSnapshot.val());
 
-      //store info to a variable
-      var trainName = childSnapshot.val().name;
-      var trainDestination = childSnapshot.val().destination;
-      var trainTime = childSnapshot.val().time;
-      var trainFreq = childSnapshot.val().freq;
+    //store info to a variable
+    var childTrainName = childSnapshot.val().trainName;
+    var childTrainDestination = childSnapshot.val().trainDestination;
+    var childTrainTime = childSnapshot.val().trainTime;
+    var childTrainFreq = childSnapshot.val().trainFreq;
+    var childNextFormatted = childSnapshot.val().nextTrain;
+    var childMinutesUntilNextTrain = childSnapshot.val().tMinutesTillNext;
 
       //log train info
-      console.log(trainName);
-      console.log(trainDestination);
-      console.log(trainTime);
-      console.log(trainFreq);
+      console.log(childTrainName, childTrainDestination, childTrainName, childTrainFreq);
 
-      //beautify stuff
-      var trainTimeConv = moment(trainTime, "hh:mm").subtract(1, "years");
-      console.log(trainTimeConv);
 
-      //current time
-      var currentTime = moment();
-      console.log("Current time: " + moment(currentTime).format("hh:mm"));
 
-      var diffTime = moment().diff(moment(trainTimeConv), "minutes");
-      console.log("Difference in time: " + diffTime);
 
-      //remainder
-      var tRemainder = diffTime % trainTime;
-      console.log(tRemainder);
-
-      //minutes till next train
-      var tMinutesTillNext = trainTime - tRemainder;
-      console.log("Minutes till nex train: " +tMinutesTillNext);
-
-      //next train
-      var nextTrain = moment().add(tMinutesTillNext, "minutes");
-      console.log("ETA: " + moment(nextTrain).format("hh:mm"));
-      
-    
-    
-      
-      $("#train-table > tbody").append("<tr><td>" + trainName + "</td><td>" + trainDestination + "</td><td>" + trainFreq + "</td><td>" + trainTimeConv + "</td><td>" + tRemainder + "</td></tr>")
+    $("#train-table > tbody").append("<tr><td>" + childTrainName + "</td><td>" + childTrainDestination + "</td><td>" + childTrainFreq + "</td><td>" + nextTrainFormatted + "</td><td>" + childMinutesUntilNextTrain + "</td></tr>")
 
   });
 
 
-}); 
+});
 
